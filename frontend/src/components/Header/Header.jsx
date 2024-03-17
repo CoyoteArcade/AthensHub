@@ -1,6 +1,7 @@
 import { TextInput, Group, rem, Title, Button } from '@mantine/core';
 import { IconSearch, IconHome, IconBook, IconLogin } from '@tabler/icons-react';
 import classes from './Header.module.css';
+import { Link } from 'react-router-dom';
 
 const links = [
   { link: '/', label: 'Home' },
@@ -12,9 +13,11 @@ export function HeaderSearch() {
   const items = links.slice(0, links.length - 1).map((link) => (
     <Button
       key={link.label}
-      href={link.link}
+      component={Link}
+      to={link.link}
+      // href={link.link}
       className={classes.link}
-      onClick={(event) => event.preventDefault()}
+      // onClick={(event) => event.preventDefault()}
       variant={link.label === 'Login' ? 'filled' : 'outline'}
       color={'#21343d'}
       radius='lg'
@@ -39,9 +42,11 @@ export function HeaderSearch() {
         />
         <Button
           key={links[links.length - 1].label}
-          href={links[links.length - 1].link}
+          // href={links[links.length - 1].link}
+          component={Link}
+          to={links[links.length - 1].link}
           className={classes.link}
-          onClick={(event) => event.preventDefault()}
+          // onClick={(event) => event.preventDefault()}
           variant={'filled'}
           color={'#086a7e'}
           radius='lg'

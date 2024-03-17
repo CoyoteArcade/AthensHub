@@ -2,6 +2,7 @@ import cx from 'clsx';
 import { Title, Text, Container, Button, Overlay, rem } from '@mantine/core';
 import classes from './Hero.module.css';
 import { IconSchool, IconUser } from '@tabler/icons-react';
+import { Link } from 'react-router-dom';
 
 export default function Hero() {
     return (
@@ -22,6 +23,8 @@ export default function Hero() {
                 <div className={classes.controls}>
                     <Button
                         className={classes.control}
+                        component={Link}
+                        to="/subjects"
                         variant="white"
                         size="lg"
                         leftSection={<IconSchool style={{ width: rem(16), height: rem(16) }} stroke={1.5} />}
@@ -32,6 +35,8 @@ export default function Hero() {
                     <Button
                         className={cx(classes.control, classes.secondaryControl)}
                         size="lg"
+                        component={Link}
+                        to="/login"
                         leftSection={<IconUser style={{ width: rem(16), height: rem(16) }} stroke={1.5} />}
                         color={'#086a7e'}
                     >

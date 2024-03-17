@@ -1,5 +1,12 @@
 import SubjectCard from './SubjectCard/SubjectCard';
-import { IconCreditCard, IconBuildingBank, IconRepeat, IconReceiptRefund, IconReceipt, IconReceiptTax, IconReport, IconCashBanknote, IconCoin } from '@tabler/icons-react';
+import { IconCreditCard, IconBuildingBank, IconRepeat, IconReceiptRefund, IconReceipt, IconReceiptTax, IconReport, IconCashBanknote, IconCoin, IconCalculator, IconTestPipe, IconTerminal, IconBooks } from '@tabler/icons-react';
+
+const subjects = {
+    math: { title: 'Mathematics', icon: IconCalculator },
+    science: { title: 'Science', icon: IconTestPipe },
+    computerScience: { title: 'Computer Science', icon: IconTerminal },
+    history: { title: 'History', icon: IconBooks }
+};
 
 const courses = {
     math: [
@@ -51,10 +58,10 @@ const courses = {
 export default function SubjectCards() {
     return (
         <>
-            <SubjectCard courses={courses.math} title='Mathematics' />
-            <SubjectCard courses={courses.computerScience} title='Computer Science' />
-            <SubjectCard courses={courses.science} title='Science' />
-            <SubjectCard courses={courses.history} title='History' />
+            <SubjectCard courses={courses.math} title={subjects.math.title} />
+            <SubjectCard courses={courses.computerScience} title={subjects.computerScience.title} />
+            <SubjectCard courses={courses.science} title={subjects.science.title} />
+            <SubjectCard courses={courses.history} title={subjects.history.title} />
         </>
     );
 }
