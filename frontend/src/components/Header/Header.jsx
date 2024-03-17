@@ -76,7 +76,7 @@ export function HeaderSearch() {
               className={classes.link}
               // onClick={(event) => event.preventDefault()}
               variant={'filled'}
-              color={'#086a7e'}
+              color={'#ffffff'}
               radius='lg'
               leftSection={
                 <IconLogin
