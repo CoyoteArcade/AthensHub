@@ -8,6 +8,7 @@ import {
 } from '@mantine/core';
 
 import classes from './SubjectCard.module.css';
+import { Link } from 'react-router-dom';
 
 // const courses = [
 //     { title: 'Credit cards', icon: IconCreditCard, color: 'violet' },
@@ -26,7 +27,7 @@ export default function ActionsGrid({ courses = [], title = "title" }) {
     const theme = useMantineTheme();
 
     const items = courses.map((item) => (
-        <UnstyledButton key={item.title} className={classes.item}>
+        <UnstyledButton key={item.title} className={classes.item} component={Link} to={item.link ? `/courses${item.link}` : '/'}>
             <item.icon color={theme.colors[item.color][6]} size="2rem" />
             <Text size="xs" mt={7}>
                 {item.title}
