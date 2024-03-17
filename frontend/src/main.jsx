@@ -8,6 +8,7 @@ import Home from './routes/Home.jsx';
 import Register from './routes/Register.jsx';
 import Subjects from './routes/Subjects.jsx';
 import Login from './routes/Login.jsx';
+import Course from './routes/Course.jsx';
 import { theme } from './theme';
 
 const router = createBrowserRouter([
@@ -34,7 +35,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/courses/:courseId',
-        element: <h1>Course</h1>,
+        element: <Course />,
       },
     ],
   },
