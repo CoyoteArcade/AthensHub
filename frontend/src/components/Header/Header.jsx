@@ -1,49 +1,56 @@
-import { Autocomplete, Group, Burger, rem } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
-import { IconSearch } from '@tabler/icons-react';
+import { TextInput, Group, rem, Title, Button } from '@mantine/core';
+import { IconSearch, IconHome, IconBook, IconLogin } from '@tabler/icons-react';
 import classes from './Header.module.css';
 
 const links = [
-  { link: '/about', label: 'Features' },
-  { link: '/pricing', label: 'Pricing' },
-  { link: '/learn', label: 'Learn' },
-  { link: '/community', label: 'Community' },
+  { link: '/', label: 'Home' },
+  { link: '/subjects', label: 'Subjects' },
+  { link: '/login', label: 'Login' }
 ];
 
 export function HeaderSearch() {
-  const [opened, { toggle }] = useDisclosure(false);
-
-  const items = links.map((link) => (
-    <a
+  const items = links.slice(0, links.length - 1).map((link) => (
+    <Button
       key={link.label}
       href={link.link}
       className={classes.link}
       onClick={(event) => event.preventDefault()}
+      variant={link.label === 'Login' ? 'filled' : 'outline'}
+      color={'#21343d'}
+      radius='lg'
+      leftSection={link.label === 'Home' ? <IconHome style={{ width: rem(16), height: rem(16) }} stroke={1.5} /> : link.label === 'Subjects' ? <IconBook style={{ width: rem(16), height: rem(16) }} stroke={1.5} /> : ''}
     >
       {link.label}
-    </a>
+    </Button>
   ));
 
   return (
     <header className={classes.header}>
-      <div className={classes.inner}>
-        <Group>
-          <Burger opened={opened} onClick={toggle} size="sm" hiddenFrom="sm" />
-        </Group>
-
-        <Group>
-          <Group ml={50} gap={5} className={classes.links} visibleFrom="sm">
-            {items}
-          </Group>
-          <Autocomplete
-            className={classes.search}
-            placeholder="Search"
-            leftSection={<IconSearch style={{ width: rem(16), height: rem(16) }} stroke={1.5} />}
-            data={['React', 'Angular', 'Vue', 'Next.js', 'Riot.js', 'Svelte', 'Blitz.js']}
-            visibleFrom="xs"
-          />
-        </Group>
-      </div>
+      <Group justify="space-around" className={classes.inner}>
+        <Title order={1}>
+          AthensHub
+        </Title>
+        {items}
+        <TextInput
+          radius={'lg'}
+          className={classes.search}
+          placeholder="Search"
+          leftSection={<IconSearch style={{ width: rem(16), height: rem(16) }} stroke={1.5} />}
+        />
+        <Button
+          key={links[links.length - 1].label}
+          href={links[links.length - 1].link}
+          className={classes.link}
+          onClick={(event) => event.preventDefault()}
+          variant={'filled'}
+          color={'#086a7e'}
+          radius='lg'
+          leftSection={<IconLogin style={{ width: rem(16), height: rem(16) }} stroke={1.5} />}
+          label={links[links.length - 1].label}
+        >
+          {links[links.length - 1].label}
+        </Button>
+      </Group>
     </header>
   );
 }
