@@ -1,41 +1,39 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
 import { MantineProvider } from '@mantine/core';
 import '@mantine/core/styles.css';
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
-import Root from './routes/Root.jsx'
-import Home from './routes/Home.jsx'
-import Register from './routes/Register.jsx'
-import Subjects from './routes/Subjects.jsx'
-import Login from './routes/Login.jsx'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Root from './routes/Root.jsx';
+import Home from './routes/Home.jsx';
+import Register from './routes/Register.jsx';
+import Subjects from './routes/Subjects.jsx';
+import Login from './routes/Login.jsx';
+import { theme } from './theme';
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <Root />,
     errorElement: <h1>404 not found</h1>,
     children: [
       {
-        path: "/register",
+        path: '/register',
         element: <Register />,
       },
       {
-        path: "/subjects",
+        path: '/subjects',
         element: <Subjects />,
       },
       {
-        path: "/login",
+        path: '/login',
         element: <Login />,
       },
       {
-        path: "/",
+        path: '/',
         element: <Home />,
       },
       {
-        path: "/courses/:courseId",
+        path: '/courses/:courseId',
         element: <h1>Course</h1>,
       },
     ],
@@ -44,8 +42,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <MantineProvider>
+    <MantineProvider defaultColorScheme='light' theme={theme}>
       <RouterProvider router={router} />
     </MantineProvider>
-  </React.StrictMode>,
-)
+  </React.StrictMode>
+);
