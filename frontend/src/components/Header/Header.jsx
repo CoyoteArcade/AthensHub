@@ -1,8 +1,8 @@
 import { TextInput, Group, rem, Title, Button, Text } from '@mantine/core';
 import { IconSearch, IconHome, IconBook, IconLogin } from '@tabler/icons-react';
 import classes from './Header.module.css';
-import { Link } from 'react-router-dom';
 import DarkMode from '../DarkModeToggle/DarkMode.jsx';
+import { Link, useLocation } from 'react-router-dom';
 
 const links = [
   { link: '/', label: 'Home' },
@@ -11,6 +11,9 @@ const links = [
 ];
 
 export function HeaderSearch() {
+  const location = useLocation();
+  const signIn = location.pathname === '/login' || location.pathname === '/register';
+  console.log(location);
   const items = links.slice(0, links.length - 1).map((link) => (
     <Button
       key={link.label}
@@ -38,7 +41,7 @@ export function HeaderSearch() {
 
   return (
     <header className={classes.header}>
-      <Group justify='space-around' className={classes.inner}>
+      <Group justify={signIn ? "center" : "space-around"} className={classes.inner}>
         <Group gap={0}>
           <Text size='30px' fw={600}>
             ATHENS
@@ -47,6 +50,8 @@ export function HeaderSearch() {
             HUB
           </Text>
         </Group>
+        {!(signIn) && (
+          <>
         {items}
         <TextInput
           radius={'lg'}
@@ -81,6 +86,8 @@ export function HeaderSearch() {
         >
           {links[links.length - 1].label}
         </Button>
+        </>
+        )}
       </Group>
     </header>
   );
