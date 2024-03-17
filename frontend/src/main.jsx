@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import Root from './routes/Root.jsx'
 import Home from './routes/Home.jsx'
+import Register from './routes/Register.jsx'
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
     element: <Root />,
     errorElement: <h1>404 not found</h1>,
     children: [
+      {
+        path: "/register",
+        element: <Register />,
+      },
       {
         path: "/subjects",
         element: <h1>Subjects</h1>,
