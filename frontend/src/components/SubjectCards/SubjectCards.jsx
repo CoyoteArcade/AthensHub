@@ -10,7 +10,7 @@ const subjects = {
 
 const courses = {
     math: [
-        { title: 'Algebra', icon: IconCreditCard, color: 'violet' },
+        { title: 'Algebra', icon: IconCreditCard, color: 'violet', link: '/algebra' },
         { title: 'Geometry', icon: IconBuildingBank, color: 'indigo' },
         { title: 'Trigonometry', icon: IconRepeat, color: 'blue' },
         { title: 'Calculus', icon: IconReceiptRefund, color: 'green' },
