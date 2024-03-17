@@ -16,6 +16,9 @@ function LoginForum(props) {
   });
 
   return (
+    <div className={classes.wrapper}>
+      
+
     <Paper radius="md" p="xl" withBorder {...props}>
       <div style={{ display: 'flex', flexDirection: 'row' }}> {/* Parent flex container */}
         <div className={classes.labels}> {/* Flex container for the text */}
@@ -65,6 +68,7 @@ function LoginForum(props) {
         </div>
       </div>
     </Paper>
+    </div>
   );
 }
 
