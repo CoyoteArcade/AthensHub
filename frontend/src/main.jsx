@@ -9,6 +9,7 @@ import {
 import Root from './routes/Root.jsx'
 import Home from './routes/Home.jsx'
 import Register from './routes/Register.jsx'
+import Subjects from './routes/Subjects.jsx'
 
 const router = createBrowserRouter([
   {
@@ -22,7 +23,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/subjects",
-        element: <h1>Subjects</h1>,
+        element: <Subjects />,
       },
       {
         path: "/login",
