@@ -9,6 +9,7 @@ import Register from './routes/Register.jsx';
 import Subjects from './routes/Subjects.jsx';
 import Login from './routes/Login.jsx';
 import Course from './routes/Course.jsx';
+import About from './routes/About.jsx';
 import { theme } from './theme';
 
 const router = createBrowserRouter([
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
     element: <Root />,
     errorElement: <h1>404 not found</h1>,
     children: [
+      {
+        path: '/about',
+        element: <About />,
+      },
       {
         path: '/register',
         element: <Register />,
