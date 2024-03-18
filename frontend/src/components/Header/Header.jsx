@@ -1,4 +1,4 @@
-import { TextInput, Group, rem, Title, Button, Text } from '@mantine/core';
+import { TextInput, Group, rem, Button, Text } from '@mantine/core';
 import { IconSearch, IconHome, IconBook, IconLogin } from '@tabler/icons-react';
 import classes from './Header.module.css';
 import DarkMode from '../DarkModeToggle/DarkMode.jsx';
