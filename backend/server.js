@@ -5,9 +5,9 @@ import dotenv from 'dotenv';
 import axios from 'axios';
 import cors from 'cors';
 dotenv.config();
-const openai = new OpenAI({
-  apiKey: process.env.OPEN_AI_KEY
-});
+// const openai = new OpenAI({
+//   apiKey: process.env.OPEN_AI_KEY
+// });
 
 const app = express();
 
@@ -55,6 +55,14 @@ app.get('/api/courses', async (req, res) => {
   console.log('GET request received');
   const courses = await Course.find({});
   res.send(courses);
+});
+
+// create a get request to retrieve a course by name
+app.get('/api/courses/:name', async (req, res) => {
+  const decodedName = decodeURI(req.params.name);
+  const course = await Course.findOne({name: decodedName});
+  console.log(course);
+  res.send(course);
 });
 
 // main();

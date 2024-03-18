@@ -22,41 +22,35 @@ import {
   IconWorld,
 } from '@tabler/icons-react';
 
-const items = [
-  { title: 'Science', link: '/subjects' },
-  { title: 'Physics', link: '/courses/algebra' },
-].map((item, index) => (
-  <Link to={item.link} style={{ textDecoration: 'none' }} key={item.title}>
-    {item.title}
-  </Link>
-));
 
 function Course() {
   const data = useLoaderData();
   console.log(data);
-  const location = useLocation();
-  const courseId = location.pathname.split('/').pop();
-  const uriToTitle = decodeURI(courseId);
-  const course = data.find((course) => course.name === uriToTitle);
+  const { name, summary, downloadLink, bookLink, subject, chapters, tableOfContents } = data;
   return (
     <>
       <Container size='75vw'>
         {/* Navigation */}
         <Breadcrumbs separator='→' separatorMargin='md' mt='sm' mb='xl'>
-          {items}
+          <Link to={'/subjects'} style={{ textDecoration: 'none' }} key={subject}>
+            {subject}
+          </Link>
+          <Link to={`/courses/${encodeURI(name)}`} style={{ textDecoration: 'none' }} key={name}>
+            {name}
+          </Link>
         </Breadcrumbs>
 
         {/* Course Name & Tabs */}
         <Title mt='lg' mb='md'>
-          {course.name}
+          {name}
         </Title>
-        <CourseTabs />
+        <CourseTabs data={data} />
       </Container>
     </>
   );
 }
 
-function CourseTabs() {
+function CourseTabs({data}) {
   const iconStyle = { width: rem(14), height: rem(14) };
 
   return (
@@ -84,7 +78,7 @@ function CourseTabs() {
       </Tabs.List>
 
       <Tabs.Panel value='material'>
-        <MaterialTab />
+        <MaterialTab data={data} />
       </Tabs.Panel>
 
       <Tabs.Panel value='psets'>
@@ -98,7 +92,7 @@ function CourseTabs() {
   );
 }
 
-function MaterialTab() {
+function MaterialTab({data}) {
   const iconStyle = { width: rem(14), height: rem(14) };
 
   return (
@@ -112,21 +106,24 @@ function MaterialTab() {
 
             {/* Book Name */}
             <Text mb='xs' size='lg' fs='italic'>
-              University Physics Volume 1
+              {name}
             </Text>
 
             <List listStyleType='none'>
               <List.Item>
                 <Group>
                   <IconDownload style={iconStyle} />
-                  <Anchor>PDF Download</Anchor>
+                  <Anchor
+                    href={data.downloadLink}
+                    target='_blank'
+                  >PDF Download</Anchor>
                 </Group>
               </List.Item>
               <List.Item>
                 <Group>
                   <IconWorld style={iconStyle} />
                   <Anchor
-                    href='https://openstax.org/books/university-physics-volume-1/pages/1-introduction'
+                    href={data.bookLink}
                     target='_blank'
                   >
                     Online Version
@@ -140,24 +137,7 @@ function MaterialTab() {
           <Box pt='30px' mb='5rem'>
             <Title order={2}>Summary</Title>
             <Divider my='md' />
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nostrum
-            similique, culpa veritatis quaerat ullam iusto voluptate quos eius
-            et maxime quae porro error nam laboriosam ratione assumenda quod
-            quam consequuntur! Alias, possimus! Dicta incidunt voluptatibus
-            laborum dolorum pariatur accusantium minus, harum accusamus iusto
-            dolores eum iure non fugiat reiciendis repudiandae a ex adipisci
-            amet enim sit libero rerum illum aspernatur. Unde veniam numquam
-            explicabo nobis sed! Ducimus, culpa dicta quisquam distinctio dolor
-            expedita rem provident omnis est quaerat suscipit modi non doloribus
-            tempora natus exercitationem sapiente incidunt eligendi corrupti
-            vel. Animi, modi. Sit nisi facilis velit animi expedita maiores
-            eveniet, consequatur odit incidunt aliquam quisquam, assumenda
-            reiciendis atque soluta delectus, amet nulla cupiditate cumque illo
-            ea molestiae tenetur doloremque architecto! Non sunt quasi quo vel
-            vitae est perspiciatis porro beatae dolor accusantium deserunt,
-            blanditiis, fugit architecto distinctio ipsam quas commodi
-            reiciendis dolorem assumenda harum illum! Nam cum voluptatibus
-            quibusdam ipsam?
+            {data.summary}
           </Box>
         </Grid.Col>
 

@@ -58,15 +58,9 @@ const courses = {
 };
 
 export default function SubjectCards() {
-    // let coursesData = useLoaderData();
-    // console.log(coursesData);
-    const [coursesData, setCoursesData] = useState([]);
-    useEffect(() => {
-        loader().then(response => {
-            console.log("response: ", response.filter(course => course.subject === "Science"));
-            setCoursesData(response);
-        });
-    }, []);
+    let coursesData = useLoaderData();
+    console.log(coursesData);
+
     return (
         <>
             <SubjectCard courses={courses.math} title={subjects.math.title} />
