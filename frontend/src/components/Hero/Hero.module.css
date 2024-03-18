@@ -1,11 +1,11 @@
 .wrapper {
   position: relative;
-  padding-top: rem(180px);
-  padding-bottom: rem(130px);
-  background-image: url("../../assets/hero.webp");
+
+  background-image: url('../../assets/prof_student_library.jpg');
   background-size: cover;
   background-position: center;
-
+  background-repeat: no-repeat;
+  background-color: #0c303f9a;
   @media (max-width: $mantine-breakpoint-xs) {
     padding-top: rem(80px);
     padding-bottom: rem(50px);
@@ -16,9 +16,9 @@
   position: relative;
   z-index: 1;
   background-color: #0c303f9a;
-  padding-bottom: 30px;
-  padding-top: 30px;
-  /* margin-top: 100px; */
+  padding-top: rem(200px);
+  padding-bottom: rem(200px);
+  height: 100%;
 }
 
 .title {
@@ -77,14 +77,5 @@
       margin-top: var(--mantine-spacing-md);
       margin-left: 0;
     }
-  }
-}
-
-.secondaryControl {
-  color: var(--mantine-color-white);
-  background-color: rgba(255, 255, 255, 0.4);
-
-  @mixin hover {
-    background-color: rgba(255, 255, 255, 0.45);
   }
 }
