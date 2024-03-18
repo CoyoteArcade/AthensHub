@@ -1,7 +1,15 @@
-import { TextInput, Group, rem, Button, Text } from '@mantine/core';
+import {
+  TextInput,
+  Group,
+  rem,
+  Button,
+  Text,
+  useComputedColorScheme,
+} from '@mantine/core';
 import { IconSearch, IconHome, IconBook, IconLogin } from '@tabler/icons-react';
 import classes from './Header.module.css';
 import DarkMode from '../DarkModeToggle/DarkMode.jsx';
+import { useColorScheme } from '@mantine/hooks';
 import { Link, useLocation } from 'react-router-dom';
 
 const links = [
@@ -12,6 +20,9 @@ const links = [
 ];
 
 export function HeaderSearch() {
+  const computedColorScheme = useComputedColorScheme('light', {
+    getInitialValueInEffect: true,
+  });
   const location = useLocation();
   const signIn =
     location.pathname === '/login' || location.pathname === '/register';
@@ -54,7 +65,15 @@ export function HeaderSearch() {
           >
             <Text size='35px' fw={700}>
               ATHENS
-              <Text component='span' fw={500} c='athens-blue.8'>
+              <Text
+                component='span'
+                fw={500}
+                c={
+                  computedColorScheme === 'dark'
+                    ? 'athens-blue.5'
+                    : 'athens-blue.7'
+                }
+              >
                 HUB
               </Text>
             </Text>
