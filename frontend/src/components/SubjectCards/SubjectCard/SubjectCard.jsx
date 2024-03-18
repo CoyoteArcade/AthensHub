@@ -12,6 +12,7 @@ import {
     IconBuildingBank,
     IconRepeat,
     IconReceiptRefund,
+    IconBook,
 } from '@tabler/icons-react';
 
 import classes from './SubjectCard.module.css';
@@ -48,13 +49,18 @@ const colors = [
     'orange',
 ];
 
+// create a function that randomly selects a color from the colors array
+function randomColor() {
+    return colors[Math.floor(Math.random() * colors.length)];
+}
+
 // eslint-disable-next-line react/prop-types
 export default function ActionsGrid({ courses = [], title = "title" }) {
     const theme = useMantineTheme();
 
-    const items = courses.map(({ name = "", color = 'violet', link = '/' }) => (
+    const items = courses.map(({ name = "", color = 'violet', link = '/' }, index) => (
         <UnstyledButton key={name} className={classes.item} component={Link} to={`/courses/${encodeURI(name)}`}>
-            <IconCreditCard color={theme.colors[color][6]} size="2rem" />
+            <IconBook color={colors[index % colors.length]} size="2rem" />
             <Text size="xs" mt={7}>
                 {name}
             </Text>

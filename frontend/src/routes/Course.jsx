@@ -123,7 +123,7 @@ function MaterialTab({ data }) {
 
             {/* Book Name */}
             <Text mb='xs' size='lg' fs='italic'>
-              {name}
+              {data.name}
             </Text>
 
             <List listStyleType='none'>
