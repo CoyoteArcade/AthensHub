@@ -10,7 +10,9 @@ import {
   Tabs,
   List,
   Group,
+  Stack,
   Grid,
+  Radio,
   TypographyStylesProvider,
 } from '@mantine/core';
 import { Link } from 'react-router-dom';
@@ -92,6 +94,7 @@ function CourseTabs() {
   );
 }
 
+// Course Material Tab
 function MaterialTab() {
   const iconStyle = { width: rem(14), height: rem(14) };
 
@@ -105,7 +108,7 @@ function MaterialTab() {
             <Divider my='md' />
 
             {/* Book Name */}
-            <Text mb='xs' size='lg' fs='italic'>
+            <Text ta='left' mb='xs' size='lg' fs='italic'>
               University Physics Volume 1
             </Text>
 
@@ -227,10 +230,78 @@ function MaterialTab() {
   );
 }
 
+// Problem Sets Tab
 function PsetTab() {
-  return <>Psets</>;
+  //
+  // Problem Set Mock Data
+  //
+  const questions_data = [
+    {
+      // Question 1 (q1)
+      question:
+        'How does temperature typically change as you move from an area of high pressure to an area of low pressure on a weather map?',
+      choices: [
+        'It generally increases',
+        'It generally decreases',
+        'It depends on other factors such as humidity and altitude',
+        'It stays the same',
+      ],
+      answer: 'It depends on other factors such as humidity and altitude',
+    },
+    {
+      // Question 2 (q2)
+      question:
+        "Suppose there's a cold front moving into an area represented on a weather map. What happens to the air temperature when this occurs?",
+      choices: [
+        'Air temperature rises rapidly',
+        'Air temperature falls slowly',
+        'Air temperature drops suddenly',
+        'No significant change in air temperature',
+      ],
+      answer: 'Air temperature falls slowly',
+    },
+  ];
+
+  // Rendered Questions
+  const questions = questions_data.map((question, idx) => {
+    return (
+      <>
+        <Box>
+          {/* Question */}
+          <Text my='md' ta='left'>
+            {question.question}
+          </Text>
+
+          {/* Answer Choices */}
+          <Radio.Group name={`q${idx + 1}`}>
+            <Stack mt='xs'>
+              {question.choices.map((choice) => {
+                return (
+                  // Single Choice
+                  <Radio value={choice} variant='outline' label={choice} />
+                );
+              })}
+            </Stack>
+          </Radio.Group>
+        </Box>
+      </>
+    );
+  });
+
+  return (
+    <Box py='2rem'>
+      {/* Chapter Title */}
+      <Title mb='xs' order={2}>
+        Chapter 1: Temperature and Heat
+      </Title>
+
+      {/* PSET Questions */}
+      <Stack gap='lg'>{questions}</Stack>
+    </Box>
+  );
 }
 
+// Social Forum Tab
 function SocialTab() {
   return <>Social</>;
 }
