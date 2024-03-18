@@ -7,6 +7,13 @@ import {
     useMantineTheme,
 } from '@mantine/core';
 
+import {
+    IconCreditCard,
+    IconBuildingBank,
+    IconRepeat,
+    IconReceiptRefund,
+} from '@tabler/icons-react';
+
 import classes from './SubjectCard.module.css';
 import { Link } from 'react-router-dom';
 
@@ -22,15 +29,34 @@ import { Link } from 'react-router-dom';
 //     { title: 'Cashback', icon: IconCashBanknote, color: 'orange' },
 // ];
 
+const icons = {
+    math: IconCreditCard,
+    science: IconBuildingBank,
+    computerScience: IconRepeat,
+    history: IconReceiptRefund,
+}
+
+const colors = [
+    'violet',
+    'indigo',
+    'blue',
+    'green',
+    'teal',
+    'cyan',
+    'pink',
+    'red',
+    'orange',
+];
+
 // eslint-disable-next-line react/prop-types
 export default function ActionsGrid({ courses = [], title = "title" }) {
     const theme = useMantineTheme();
 
-    const items = courses.map((item) => (
-        <UnstyledButton key={item.title} className={classes.item} component={Link} to={item.link ? `/courses${item.link}` : '/'}>
-            <item.icon color={theme.colors[item.color][6]} size="2rem" />
+    const items = courses.map(({ name = "", color = 'violet', link = '/' }) => (
+        <UnstyledButton key={name} className={classes.item} component={Link} to={link}>
+            <IconCreditCard color={theme.colors[color][6]} size="2rem" />
             <Text size="xs" mt={7}>
-                {item.title}
+                {name}
             </Text>
         </UnstyledButton>
     ));

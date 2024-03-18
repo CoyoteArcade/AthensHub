@@ -13,7 +13,7 @@ import {
   Grid,
   TypographyStylesProvider,
 } from '@mantine/core';
-import { Link } from 'react-router-dom';
+import { Link, useLoaderData, useLocation } from 'react-router-dom';
 import {
   IconBooks,
   IconPencilQuestion,
@@ -32,6 +32,12 @@ const items = [
 ));
 
 function Course() {
+  const data = useLoaderData();
+  console.log(data);
+  const location = useLocation();
+  const courseId = location.pathname.split('/').pop();
+  const uriToTitle = decodeURI(courseId);
+  const course = data.find((course) => course.name === uriToTitle);
   return (
     <>
       <Container size='75vw'>
@@ -42,7 +48,7 @@ function Course() {
 
         {/* Course Name & Tabs */}
         <Title mt='lg' mb='md'>
-          Physics
+          {course.name}
         </Title>
         <CourseTabs />
       </Container>

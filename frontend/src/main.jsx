@@ -10,10 +10,12 @@ import Subjects from './routes/Subjects.jsx';
 import Login from './routes/Login.jsx';
 import Course from './routes/Course.jsx';
 import { theme } from './theme';
+import { loader as courseLoader } from './loaders/courseLoader';
 
 const router = createBrowserRouter([
   {
     path: '/',
+    loader: courseLoader,
     element: <Root />,
     errorElement: <h1>404 not found</h1>,
     children: [
