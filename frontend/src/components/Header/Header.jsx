@@ -1,4 +1,4 @@
-import { TextInput, Group, rem, Title, Button, Text } from '@mantine/core';
+import { TextInput, Group, rem, Button, Text } from '@mantine/core';
 import { IconSearch, IconHome, IconBook, IconLogin } from '@tabler/icons-react';
 import classes from './Header.module.css';
 import DarkMode from '../DarkModeToggle/DarkMode.jsx';
@@ -7,6 +7,7 @@ import { Link, useLocation } from 'react-router-dom';
 const links = [
   { link: '/', label: 'Home' },
   { link: '/subjects', label: 'Subjects' },
+    { link: '/about', label: 'About'},
   { link: '/login', label: 'Login' },
 ];
 
@@ -30,6 +31,8 @@ export function HeaderSearch() {
           <IconHome style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
         ) : link.label === 'Subjects' ? (
           <IconBook style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
+        ) : link.label === 'About' ?(
+          <IconHome style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
         ) : (
           ''
         )
