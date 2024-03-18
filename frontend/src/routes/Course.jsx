@@ -232,9 +232,15 @@ function MaterialTab() {
 
 // Problem Sets Tab
 function PsetTab() {
-  //
-  // Problem Set Mock Data
-  //
+  const chapters = [
+    'Chapter 1: Temperature and Heat',
+    'Chapter 2: The Kinetic Theory of Gases',
+    'Chapter 3: The First Law of Thermodynamics',
+    'Chapter 4: The Second Law of Thermodynamics',
+    'Chapter 5: Electric Charges and Fields',
+  ];
+
+  // PSET Mock Data
   const questions_data = [
     {
       // Question 1 (q1)
@@ -262,7 +268,6 @@ function PsetTab() {
     },
   ];
 
-  // Rendered Questions
   const questions = questions_data.map((question, idx) => {
     return (
       <>
@@ -289,15 +294,49 @@ function PsetTab() {
   });
 
   return (
-    <Box py='2rem'>
-      {/* Chapter Title */}
-      <Title mb='xs' order={2}>
-        Chapter 1: Temperature and Heat
-      </Title>
+    <Group py='1.5rem' wrap='nowrap'>
+      {/* PSET Vertical Sidebar Tabs */}
+      <Tabs defaultValue={chapters[0]} orientation='vertical' placement='left'>
+        {/* Tab Names */}
+        <Tabs.List>
+          <Tabs.Tab value={chapters[0]}>{chapters[0]}</Tabs.Tab>
+          <Tabs.Tab value={chapters[1]}>{chapters[1]}</Tabs.Tab>
+          <Tabs.Tab value={chapters[2]}>{chapters[2]}</Tabs.Tab>
+        </Tabs.List>
 
-      {/* PSET Questions */}
-      <Stack gap='lg'>{questions}</Stack>
-    </Box>
+        {/* Tab Content */}
+        {/* Chapter 1 */}
+        <Tabs.Panel value={chapters[0]}>
+          <Box p='md'>
+            <Title order={2} mb='md'>
+              {chapters[0]}
+            </Title>
+            <Stack gap='lg'>{questions}</Stack>
+          </Box>
+        </Tabs.Panel>
+
+        {/* Chapter 2 */}
+        <Tabs.Panel value={chapters[1]}>
+          {' '}
+          <Box p='md'>
+            <Title order={2} mb='md'>
+              {chapters[1]}
+            </Title>
+            <Stack gap='lg'>{questions}</Stack>
+          </Box>
+        </Tabs.Panel>
+
+        {/* Chapter 3... */}
+        <Tabs.Panel value={chapters[2]}>
+          <Box p='md'>
+            <Title order={2} mb='md'>
+              {chapters[2]}
+            </Title>
+            <Stack gap='lg'>{questions}</Stack>
+          </Box>
+        </Tabs.Panel>
+      </Tabs>
+    </Group>
   );
 }
 
