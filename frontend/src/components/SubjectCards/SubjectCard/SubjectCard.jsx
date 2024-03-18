@@ -53,7 +53,7 @@ export default function ActionsGrid({ courses = [], title = "title" }) {
     const theme = useMantineTheme();
 
     const items = courses.map(({ name = "", color = 'violet', link = '/' }) => (
-        <UnstyledButton key={name} className={classes.item} component={Link} to={link}>
+        <UnstyledButton key={name} className={classes.item} component={Link} to={`/courses/${encodeURI(name)}`}>
             <IconCreditCard color={theme.colors[color][6]} size="2rem" />
             <Text size="xs" mt={7}>
                 {name}
