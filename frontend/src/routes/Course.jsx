@@ -232,109 +232,160 @@ function MaterialTab() {
 
 // Problem Sets Tab
 function PsetTab() {
-  const chapters = [
-    'Chapter 1: Temperature and Heat',
-    'Chapter 2: The Kinetic Theory of Gases',
-    'Chapter 3: The First Law of Thermodynamics',
-    'Chapter 4: The Second Law of Thermodynamics',
-    'Chapter 5: Electric Charges and Fields',
+  /*
+   ** PSET MOCK DATA (Replace with real data)
+   */
+  const pset_data = [
+    {
+      chapter: 'Chapter 1: Temperature and Heat',
+      problems: [
+        {
+          question:
+            'If you leave a glass of water outdoors during winter night, it will freeze eventually due to:',
+          choices: ['Radiation', 'Evaporation', 'Condensation', 'Convection'],
+          answer: 'Radiation',
+        },
+        {
+          question: 'When a substance is heated, what happens to its particles',
+          choices: [
+            'They slow down and move closer together',
+            'They speed up and move farther apart',
+            'They stay at the same speed and distance from each other',
+            'They become denser and heavier',
+          ],
+          answer: 'They speed up and move farther apart',
+        },
+      ],
+    },
+
+    {
+      chapter: 'Chapter 2: The Kinetic Theory of Gases',
+      problems: [
+        {
+          question:
+            'What is the basic assumption of the kinetic theory of gases regarding the behavior of gas particles',
+          choices: [
+            'Gas particles are stationary and do not move.',
+            'Gas particles attract each other and form clusters.',
+            'Gas particles are in constant random motion and collide with each other and the walls of the container.',
+            'Gas particles repel each other and spread out uniformly throughout the container.',
+          ],
+          answer:
+            'Gas particles are in constant random motion and collide with each other and the walls of the container.',
+        },
+        {
+          question:
+            'Which statement about the average kinetic energy of gas particles is true according to the kinetic theory of gases?',
+          choices: [
+            'The average kinetic energy of gas particles depends on the mass of the particles.',
+            'The average kinetic energy of gas particles is directly proportional to the volume of the container.',
+            'The average kinetic energy of gas particles is independent of the identity of the gas.',
+            'The average kinetic energy of gas particles is zero since they spend most of their time at rest.',
+          ],
+          answer:
+            'The average kinetic energy of gas particles depends on the mass of the particles.',
+        },
+      ],
+    },
+
+    {
+      chapter: 'Chapter 3: The First Law of Thermodynamics',
+      problems: [
+        {
+          question:
+            'Which of the following statements best expresses the first law of thermodynamics?',
+          choices: [
+            'Energy can be created or destroyed.',
+            'Heat always flows from a hotter body to a cooler one.',
+            'The total energy of an isolated system remains constant over time.',
+            'Work done on a system increases its internal energy.',
+          ],
+          answer: 'Work done on a system increases its internal energy.',
+        },
+        {
+          question:
+            'When a gas expands reversibly and adiabatically, which of the following quantities remains constant?',
+          choices: ['Temperature', 'Pressure', 'Volume', 'Internal energy'],
+          answer: 'Temperature',
+        },
+        {
+          question:
+            'Consider a cylinder fitted with a piston containing a gas, and let Q represent the amount of heat transferred to the gas, W the work done by the gas, and U the internal energy of the gas. If the initial state and final state of the gas are both known, then which of the following expressions correctly calculates the net work done during the process?',
+          choices: [
+            'W = Q - U_final + U_initial',
+            'W = Q + U_final - U_initial',
+            'W = Q - (U_final - U_initial)',
+            'W = Q * (U_final - U_initial)',
+          ],
+          answer: 'W = Q - (U_final - U_initial)',
+        },
+      ],
+    },
   ];
 
-  // PSET Mock Data
-  const questions_data = [
-    {
-      // Question 1 (q1)
-      question:
-        'How does temperature typically change as you move from an area of high pressure to an area of low pressure on a weather map?',
-      choices: [
-        'It generally increases',
-        'It generally decreases',
-        'It depends on other factors such as humidity and altitude',
-        'It stays the same',
-      ],
-      answer: 'It depends on other factors such as humidity and altitude',
-    },
-    {
-      // Question 2 (q2)
-      question:
-        "Suppose there's a cold front moving into an area represented on a weather map. What happens to the air temperature when this occurs?",
-      choices: [
-        'Air temperature rises rapidly',
-        'Air temperature falls slowly',
-        'Air temperature drops suddenly',
-        'No significant change in air temperature',
-      ],
-      answer: 'Air temperature falls slowly',
-    },
-  ];
+  const chapter_names = pset_data.map((pset_group) => {
+    return pset_group.chapter;
+  });
 
-  const questions = questions_data.map((question, idx) => {
+  // Tab Names
+  const ch_tab_names = chapter_names.map((chapter) => {
     return (
-      <>
+      <Tabs.Tab value={chapter} key={chapter}>
+        {chapter}
+      </Tabs.Tab>
+    );
+  });
+
+  // Tab Content
+  const ch_tab_content = pset_data.map((pset_group) => {
+    // Problems per Chapter
+    const problems = pset_group.problems.map((problem, idx) => {
+      return (
         <Box>
           {/* Question */}
           <Text my='md' ta='left'>
-            {question.question}
+            {problem.question}
           </Text>
 
           {/* Answer Choices */}
           <Radio.Group name={`q${idx + 1}`}>
             <Stack mt='xs'>
-              {question.choices.map((choice) => {
+              {problem.choices.map((choice) => {
                 return (
-                  // Single Choice
                   <Radio value={choice} variant='outline' label={choice} />
                 );
               })}
             </Stack>
           </Radio.Group>
         </Box>
-      </>
+      );
+    });
+
+    return (
+      <Tabs.Panel value={pset_group.chapter}>
+        <Box component='form' p='md'>
+          <Title order={2} mb='md'>
+            {pset_group.chapter}
+          </Title>
+          <Stack gap='lg'>{problems}</Stack>
+        </Box>
+      </Tabs.Panel>
     );
   });
 
   return (
     <Group py='1.5rem' wrap='nowrap'>
       {/* PSET Vertical Sidebar Tabs */}
-      <Tabs defaultValue={chapters[0]} orientation='vertical' placement='left'>
+      <Tabs
+        defaultValue={chapter_names[0]}
+        orientation='vertical'
+        placement='left'
+      >
         {/* Tab Names */}
-        <Tabs.List>
-          <Tabs.Tab value={chapters[0]}>{chapters[0]}</Tabs.Tab>
-          <Tabs.Tab value={chapters[1]}>{chapters[1]}</Tabs.Tab>
-          <Tabs.Tab value={chapters[2]}>{chapters[2]}</Tabs.Tab>
-        </Tabs.List>
+        <Tabs.List>{ch_tab_names}</Tabs.List>
 
         {/* Tab Content */}
-        {/* Chapter 1 */}
-        <Tabs.Panel value={chapters[0]}>
-          <Box p='md'>
-            <Title order={2} mb='md'>
-              {chapters[0]}
-            </Title>
-            <Stack gap='lg'>{questions}</Stack>
-          </Box>
-        </Tabs.Panel>
-
-        {/* Chapter 2 */}
-        <Tabs.Panel value={chapters[1]}>
-          {' '}
-          <Box p='md'>
-            <Title order={2} mb='md'>
-              {chapters[1]}
-            </Title>
-            <Stack gap='lg'>{questions}</Stack>
-          </Box>
-        </Tabs.Panel>
-
-        {/* Chapter 3... */}
-        <Tabs.Panel value={chapters[2]}>
-          <Box p='md'>
-            <Title order={2} mb='md'>
-              {chapters[2]}
-            </Title>
-            <Stack gap='lg'>{questions}</Stack>
-          </Box>
-        </Tabs.Panel>
+        {ch_tab_content}
       </Tabs>
     </Group>
   );
