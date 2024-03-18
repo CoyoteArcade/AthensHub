@@ -3,7 +3,7 @@ import { IconSearch, IconHome, IconBook, IconLogin } from '@tabler/icons-react';
 import classes from './Header.module.css';
 import DarkMode from '../DarkModeToggle/DarkMode.jsx';
 import { Link, useLocation } from 'react-router-dom';
-// uwu
+
 const links = [
   { link: '/', label: 'Home' },
   { link: '/subjects', label: 'Subjects' },
