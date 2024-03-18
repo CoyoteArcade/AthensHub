@@ -85,7 +85,7 @@ export function HeaderSearch() {
             <TextInput
               radius={'lg'}
               className={classes.search}
-              placeholder='Search'
+              placeholder='Search courses'
               leftSection={
                 <IconSearch
                   style={{ width: rem(16), height: rem(16) }}
