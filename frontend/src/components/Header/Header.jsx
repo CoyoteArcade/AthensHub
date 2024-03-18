@@ -6,14 +6,15 @@ import { Link, useLocation } from 'react-router-dom';
 
 const links = [
   { link: '/', label: 'Home' },
-  { link: '/subjects', label: 'Subjects' },
-    { link: '/about', label: 'About'},
+  { link: '/about', label: 'About' },
+  { link: '/subjects', label: 'Courses' },
   { link: '/login', label: 'Login' },
 ];
 
 export function HeaderSearch() {
   const location = useLocation();
-  const signIn = location.pathname === '/login' || location.pathname === '/register';
+  const signIn =
+    location.pathname === '/login' || location.pathname === '/register';
   console.log(location);
   const items = links.slice(0, links.length - 1).map((link) => (
     <Button
@@ -24,15 +25,10 @@ export function HeaderSearch() {
       className={classes.link}
       // onClick={(event) => event.preventDefault()}
       variant={link.label === 'Login' ? 'filled' : 'outline'}
-      color={'#21343d'}
       radius='lg'
       leftSection={
-        link.label === 'Home' ? (
-          <IconHome style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
-        ) : link.label === 'Subjects' ? (
+        link.label === 'Courses' ? (
           <IconBook style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
-        ) : link.label === 'About' ?(
-          <IconHome style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
         ) : (
           ''
         )
@@ -44,20 +40,29 @@ export function HeaderSearch() {
 
   return (
     <header className={classes.header}>
-      <Group justify={signIn ? "center" : "space-around"} className={classes.inner}>
+      <Group
+        justify={signIn ? 'center' : 'space-between'}
+        className={classes.inner}
+      >
         <Group gap={0}>
-          <Link to='/' style={{ textDecoration: "none" }}>
-            <Text size='30px' fw={600}>
+          <Link
+            to='/'
+            style={{
+              textDecoration: 'none',
+              color: 'var(--mantine-color-dark)',
+            }}
+          >
+            <Text size='35px' fw={700}>
               ATHENS
-            </Text>
-            <Text size='30px' c='athens-blue.6' fw={400}>
-              HUB
+              <Text component='span' fw={500} c='athens-blue.8'>
+                HUB
+              </Text>
             </Text>
           </Link>
         </Group>
-        {!(signIn) && (
+        {!signIn && (
           <>
-            {items}
+            <Group gap='lg'>{items}</Group>
             <TextInput
               radius={'lg'}
               className={classes.search}
@@ -69,28 +74,30 @@ export function HeaderSearch() {
                 />
               }
             />
-            <DarkMode />
 
-            <Button
-              key={links[links.length - 1].label}
-              // href={links[links.length - 1].link}
-              component={Link}
-              to={links[links.length - 1].link}
-              className={classes.link}
-              // onClick={(event) => event.preventDefault()}
-              variant={'filled'}
-              color={'#ffffff'}
-              radius='lg'
-              leftSection={
-                <IconLogin
-                  style={{ width: rem(16), height: rem(16) }}
-                  stroke={1.5}
-                />
-              }
-              label={links[links.length - 1].label}
-            >
-              {links[links.length - 1].label}
-            </Button>
+            <Group>
+              <DarkMode />
+              <Button
+                key={links[links.length - 1].label}
+                // href={links[links.length - 1].link}
+                component={Link}
+                to={links[links.length - 1].link}
+                className={classes.link}
+                // onClick={(event) => event.preventDefault()}
+                variant={'filled'}
+                color={'athens-blue'}
+                radius='lg'
+                leftSection={
+                  <IconLogin
+                    style={{ width: rem(16), height: rem(16) }}
+                    stroke={1.5}
+                  />
+                }
+                label={links[links.length - 1].label}
+              >
+                {links[links.length - 1].label}
+              </Button>
+            </Group>
           </>
         )}
       </Group>
