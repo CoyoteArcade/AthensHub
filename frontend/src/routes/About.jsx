@@ -1,4 +1,4 @@
-import { Container, Box, px } from '@mantine/core';
+import { Container, Box } from '@mantine/core';
 import classes from '../components/AboutUs/AboutUs.module.css';
 const aboutText =
   `About AthensHub.
