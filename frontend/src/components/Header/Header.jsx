@@ -2,17 +2,52 @@ import { TextInput, Group, rem, Button, Text } from '@mantine/core';
 import { IconSearch, IconHome, IconBook, IconLogin } from '@tabler/icons-react';
 import classes from './Header.module.css';
 import DarkMode from '../DarkModeToggle/DarkMode.jsx';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLoaderData, useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const links = [
   { link: '/', label: 'Home' },
   { link: '/subjects', label: 'Subjects' },
-    { link: '/about', label: 'About'},
+  { link: '/about', label: 'About'},
   { link: '/login', label: 'Login' },
 ];
 
 export function HeaderSearch() {
+  const courses = useLoaderData();
+  
+  console.log("courses", courses);
   const location = useLocation();
+  const navigate = useNavigate();
+  const [searchValue, setSearchValue] = useState(''); // For search input
+  const [filteredCourses, setFilteredCourses] = useState([]); // For filtered dropdown results
+  const [showDropdown, setShowDropdown] = useState(false); // To show/hide dropdown
+
+  // Update filteredLinks based on search input
+  useEffect(() => {
+    if (searchValue) {
+      const filtered = Object.values(courses).flat().filter((course) =>
+        course.name.toLowerCase().includes(searchValue.toLowerCase())
+      );
+      setFilteredCourses(filtered);
+      setShowDropdown(true);
+    } else {
+      setShowDropdown(false);
+    }
+  }, [searchValue, courses]);
+
+  // Handle search input changes
+  const handleSearchChange = (event) => {
+    setSearchValue(event.target.value);
+  };
+
+  // Function to handle clicking on a course
+  const handleCourseClick = (courseName) => {
+    setSearchValue('');
+    setShowDropdown(false);
+    navigate(`/courses/${encodeURI(courseName)}`); // Assuming your course URLs are like '/courses/course-name'
+  };
+
   const signIn = location.pathname === '/login' || location.pathname === '/register';
   console.log(location);
   const items = links.slice(0, links.length - 1).map((link) => (
@@ -59,9 +94,11 @@ export function HeaderSearch() {
           <>
             {items}
             <TextInput
+              value={searchValue}
+              onChange={handleSearchChange}
               radius={'lg'}
               className={classes.search}
-              placeholder='Search'
+              placeholder='Search courses'
               leftSection={
                 <IconSearch
                   style={{ width: rem(16), height: rem(16) }}
@@ -69,6 +106,19 @@ export function HeaderSearch() {
                 />
               }
             />
+            {showDropdown && (
+            <div style={{ position: 'absolute', backgroundColor: 'white', width: '30%' }}>
+            {filteredCourses.map((course) => (
+              <div
+                key={course.name}
+                onClick={() => handleCourseClick(course.name)}
+                style={{ padding: '10px', cursor: 'pointer' }}
+              >
+                {course.name}
+                </div>
+              ))}
+            </div>
+          )}
             <DarkMode />
 
             <Button
