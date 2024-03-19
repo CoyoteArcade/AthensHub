@@ -63,10 +63,10 @@ export default function SubjectCards() {
 
     return (
         <>
-            <SubjectCard courses={courses.math} title={subjects.math.title} />
-            <SubjectCard courses={courses.computerScience} title={subjects.computerScience.title} />
+            <SubjectCard courses={coursesData.filter(course => course.subject === "Mathematics")} title={subjects.math.title} />
+            <SubjectCard courses={coursesData.filter(course => course.subject === "Computer Science")} title={subjects.computerScience.title} />
             <SubjectCard courses={coursesData.filter(course => course.subject === "Science")} title={subjects.science.title} />
-            <SubjectCard courses={courses.history} title={subjects.history.title} />
+            <SubjectCard courses={coursesData.filter(course => course.subject === "History")} title={subjects.history.title} />
         </>
     );
 }
