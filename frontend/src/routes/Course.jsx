@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-key */
+/* eslint-disable react/prop-types */
 import {
   Box,
   Breadcrumbs,
@@ -99,7 +101,7 @@ function CourseTabs({ data }) {
       </Tabs.Panel>
 
       <Tabs.Panel value='psets'>
-        <PsetTab />
+        <PsetTab data={data} />
       </Tabs.Panel>
 
       <Tabs.Panel value='social'>
@@ -245,10 +247,11 @@ function MaterialTab({ data }) {
 }
 
 // Problem Sets Tab
-function PsetTab() {
+function PsetTab({ data }) {
   /*
    ** PSET MOCK DATA (Replace with real data)
    */
+  console.log("pset data", data);
   const pset_data = [
     {
       chapter: 'Chapter 1: Temperature and Heat',
@@ -337,51 +340,51 @@ function PsetTab() {
     },
   ];
 
-  const chapter_names = pset_data.map((pset_group) => {
-    return pset_group.chapter;
+  const chapter_names = data.chapters.map((pset_group) => {
+    return pset_group.name;
   });
 
   // Tab Names
-  const ch_tab_names = chapter_names.map((chapter) => {
+  const ch_tab_names = (chapter_names) ? chapter_names.map((chapter) => {
     return (
       <Tabs.Tab value={chapter} key={chapter}>
         {chapter}
       </Tabs.Tab>
     );
-  });
+  }) : [];
 
   // Tab Content
-  const ch_tab_content = pset_data.map((pset_group) => {
+  const ch_tab_content = data.chapters.map((pset_group) => {
     // Problems per Chapter
-    const problems = pset_group.problems.map((problem, idx) => {
-      return (
-        <Box>
-          {/* Question */}
-          <Text my='md' ta='left'>
-            {problem.question}
-          </Text>
+    let randomQIndex = Math.floor(Math.random() * pset_group.questions.length);
+    const problem = pset_group.questions[randomQIndex];
+    const problemElement = (
+      <Box>
+        {/* Question */}
+        <Text my='md' ta='left'>
+          {problem.question}
+        </Text>
 
-          {/* Answer Choices */}
-          <Radio.Group name={`q${idx + 1}`}>
-            <Stack mt='xs'>
-              {problem.choices.map((choice) => {
-                return (
-                  <Radio value={choice} variant='outline' label={choice} />
-                );
-              })}
-            </Stack>
-          </Radio.Group>
-        </Box>
-      );
-    });
+        {/* Answer Choices */}
+        <Radio.Group name={`q${randomQIndex + 1}`}>
+          <Stack mt='xs'>
+            {problem.choices.map((choice) => {
+              return (
+                <Radio value={choice} variant='outline' label={choice} />
+              );
+            })}
+          </Stack>
+        </Radio.Group>
+      </Box>
+    );
 
     return (
-      <Tabs.Panel value={pset_group.chapter}>
+      <Tabs.Panel value={pset_group.name || ''}>
         <Box component='form' p='md'>
           <Title order={2} mb='md'>
-            {pset_group.chapter}
+            {pset_group.name}
           </Title>
-          <Stack gap='lg'>{problems}</Stack>
+          <Stack gap='lg'>{problemElement}</Stack>
         </Box>
       </Tabs.Panel>
     );
