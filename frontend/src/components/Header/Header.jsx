@@ -29,8 +29,8 @@ export function HeaderSearch() {
   console.log('courses', courses);
   const links = [
     { link: '/', label: 'Home' },
-    { link: '/subjects', label: 'Subjects' },
     { link: '/about', label: 'About' },
+    { link: '/subjects', label: 'Courses' },
     { link: `${user ? '/' : '/login'}`, label: `${user ? 'Logout' : 'Login'}` },
   ];
 
@@ -141,7 +141,7 @@ export function HeaderSearch() {
         {!signIn && (
           <>
             {/* Nav Buttons */}
-            <Group gap='lg'>{items}</Group>
+            <Group gap='30px'>{items}</Group>
 
             {/* Searchbar with Results */}
             <Autocomplete
@@ -157,28 +157,29 @@ export function HeaderSearch() {
               }}
             />
 
-            <DarkMode />
-
-            {/* Login Button */}
-            <Button
-              key={links[links.length - 1].label}
-              // href={links[links.length - 1].link}
-              component={Link}
-              to={links[links.length - 1].link}
-              className={classes.link}
-              variant={'filled'}
-              radius='lg'
-              onClick={user ? handleLogout : login}
-              leftSection={
-                <IconLogin
-                  style={{ width: rem(16), height: rem(16) }}
-                  stroke={1.5}
-                />
-              }
-              label={links[links.length - 1].label}
-            >
-              {links[links.length - 1].label}
-            </Button>
+            <Group>
+              <DarkMode />
+              {/* Login Button */}
+              <Button
+                key={links[links.length - 1].label}
+                // href={links[links.length - 1].link}
+                component={Link}
+                to={links[links.length - 1].link}
+                className={classes.link}
+                variant={'filled'}
+                radius='lg'
+                onClick={user ? handleLogout : login}
+                leftSection={
+                  <IconLogin
+                    style={{ width: rem(16), height: rem(16) }}
+                    stroke={1.5}
+                  />
+                }
+                label={links[links.length - 1].label}
+              >
+                {links[links.length - 1].label}
+              </Button>
+            </Group>
           </>
         )}
       </Group>
