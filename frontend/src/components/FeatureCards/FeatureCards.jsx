@@ -4,6 +4,7 @@ import {
   Stack,
   Title,
   Text,
+  Image,
   Card,
   SimpleGrid,
   Container,
@@ -39,7 +40,7 @@ export default function FeaturesCards() {
   const features = mockdata.map((feature) => (
     <Card
       key={feature.title}
-      shadow='md'
+      shadow='lg'
       radius='md'
       className={classes.card}
       padding='xl'
@@ -66,24 +67,30 @@ export default function FeaturesCards() {
 
   return (
     <Container size='lg' py='xl'>
-      <Group justify='center'>
-        <Badge variant='filled' size='lg'>
-          Best Learning Platform Ever
-        </Badge>
-      </Group>
+      <Stack maw='500px' m='auto'>
+        <Title order={2} className={classes.title} ta='center' mt='sm'>
+          Collaborative Learning Platform for Underserved Communities
+        </Title>
 
-      <Title order={2} className={classes.title} ta='center' mt='sm'>
-        Collaborative Learning Platform for Underserved Communities
-      </Title>
+        {/* Badge */}
+        <Group justify='center' mb='sm'>
+          <Badge variant='filled' size='lg'>
+            Open Source Learning Platform
+          </Badge>
+        </Group>
 
-      <Text c='dimmed' className={classes.description} ta='center' mt='md'>
-        AthensHub focuses on making quality education accessible to everyone,
-        especially targeting underserved communities. It facilitates
-        collaborative learning and knowledge sharing through a peer-supported
-        network.
-      </Text>
+        <Image radius='lg' src='src/assets/hero.webp' />
 
-      <SimpleGrid cols={{ base: 1, md: 3 }} spacing='xl' mt={50}>
+        <Text className={classes.description} ta='center' mt='md'>
+          AthensHub focuses on making quality education accessible to everyone,
+          especially targeting underserved communities. It facilitates
+          collaborative learning and knowledge sharing through a peer-supported
+          network.
+        </Text>
+      </Stack>
+
+      {/* Feature Cards Grid */}
+      <SimpleGrid p='md' cols={{ base: 1, md: 3 }} spacing='xl' mt={50}>
         {features}
       </SimpleGrid>
     </Container>
