@@ -122,7 +122,7 @@ export function HeaderSearch() {
         {!signIn && (
           <>
             {/* Nav Buttons */}
-            {items}
+            <Group gap='lg'>{items}</Group>
 
             {/* Searchbar */}
             <Autocomplete
@@ -138,28 +138,29 @@ export function HeaderSearch() {
               }}
             />
 
-            <DarkMode />
-
-            {/* Login Button */}
-            <Button
-              key={links[links.length - 1].label}
-              // href={links[links.length - 1].link}
-              component={Link}
-              to={links[links.length - 1].link}
-              className={classes.link}
-              // onClick={(event) => event.preventDefault()}
-              variant={'filled'}
-              radius='lg'
-              leftSection={
-                <IconLogin
-                  style={{ width: rem(16), height: rem(16) }}
-                  stroke={1.5}
-                />
-              }
-              label={links[links.length - 1].label}
-            >
-              {links[links.length - 1].label}
-            </Button>
+            {/* Darkmode & Login Buttons */}
+            <Group>
+              <DarkMode />
+              <Button
+                key={links[links.length - 1].label}
+                // href={links[links.length - 1].link}
+                component={Link}
+                to={links[links.length - 1].link}
+                className={classes.link}
+                // onClick={(event) => event.preventDefault()}
+                variant={'filled'}
+                radius='lg'
+                leftSection={
+                  <IconLogin
+                    style={{ width: rem(16), height: rem(16) }}
+                    stroke={1.5}
+                  />
+                }
+                label={links[links.length - 1].label}
+              >
+                {links[links.length - 1].label}
+              </Button>
+            </Group>
           </>
         )}
       </Group>
