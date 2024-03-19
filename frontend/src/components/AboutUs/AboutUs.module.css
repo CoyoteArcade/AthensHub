@@ -13,7 +13,7 @@
   width: 100%;
   height: 100%;
   background-image: linear-gradient(#0c303f9a, #0c303f9a),
-    url('src/assets/college_students_working.jpg');
+    url('/src/assets/college_students_working.jpg');
   background-size: cover;
   background-position: center;
 
