@@ -11,6 +11,16 @@ dotenv.config();
 const PORT = process.env.PORT || 3001;
 const app = express();
 
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(process.env.MONGO_URI);
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
+  } catch (error) {
+    console.log(error);
+    process.exit(1);
+  }
+}
+
 app.use(express.json());
 // add cors to allow cross origin requests
 app.use(cors());
@@ -67,14 +77,9 @@ app.get('/api/courses/:name', async (req, res) => {
 
 // main();
 // connect to mongodb
-mongoose.connect(process.env.MONGO_URI)
-.then(() => {
+//Connect to the database before listening
+connectDB().then(() => {
   app.listen(PORT, () => {
-    console.log('Server started');
-    console.log(`Listening on port ${PORT}`);
-    // axios.get('http://localhost:3001/api/courses')
-    // .then((response) => {
-    //   console.log(response);
-    // })
-  });
-});
+      console.log("listening for requests");
+  })
+})
