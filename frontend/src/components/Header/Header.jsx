@@ -1,4 +1,11 @@
-import { TextInput, Group, rem, Button, Text } from '@mantine/core';
+import {
+  TextInput,
+  Group,
+  rem,
+  Button,
+  Text,
+  Autocomplete,
+} from '@mantine/core';
 import { IconSearch, IconHome, IconBook, IconLogin } from '@tabler/icons-react';
 import classes from './Header.module.css';
 import DarkMode from '../DarkModeToggle/DarkMode.jsx';
@@ -9,14 +16,14 @@ import { useNavigate } from 'react-router-dom';
 const links = [
   { link: '/', label: 'Home' },
   { link: '/subjects', label: 'Subjects' },
-  { link: '/about', label: 'About'},
+  { link: '/about', label: 'About' },
   { link: '/login', label: 'Login' },
 ];
 
 export function HeaderSearch() {
   const courses = useLoaderData();
-  
-  console.log("courses", courses);
+
+  console.log('courses', courses);
   const location = useLocation();
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState(''); // For search input
@@ -26,9 +33,11 @@ export function HeaderSearch() {
   // Update filteredLinks based on search input
   useEffect(() => {
     if (searchValue) {
-      const filtered = Object.values(courses).flat().filter((course) =>
-        course.name.toLowerCase().includes(searchValue.toLowerCase())
-      );
+      const filtered = Object.values(courses)
+        .flat()
+        .filter((course) =>
+          course.name.toLowerCase().includes(searchValue.toLowerCase())
+        );
       setFilteredCourses(filtered);
       setShowDropdown(true);
     } else {
@@ -48,7 +57,8 @@ export function HeaderSearch() {
     navigate(`/courses/${encodeURI(courseName)}`); // Assuming your course URLs are like '/courses/course-name'
   };
 
-  const signIn = location.pathname === '/login' || location.pathname === '/register';
+  const signIn =
+    location.pathname === '/login' || location.pathname === '/register';
   console.log(location);
   const items = links.slice(0, links.length - 1).map((link) => (
     <Button
@@ -66,7 +76,7 @@ export function HeaderSearch() {
           <IconHome style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
         ) : link.label === 'Subjects' ? (
           <IconBook style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
-        ) : link.label === 'About' ?(
+        ) : link.label === 'About' ? (
           <IconHome style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
         ) : (
           ''
@@ -79,9 +89,12 @@ export function HeaderSearch() {
 
   return (
     <header className={classes.header}>
-      <Group justify={signIn ? "center" : "space-around"} className={classes.inner}>
+      <Group
+        justify={signIn ? 'center' : 'space-around'}
+        className={classes.inner}
+      >
         <Group gap={0}>
-          <Link to='/' style={{ textDecoration: "none" }}>
+          <Link to='/' style={{ textDecoration: 'none' }}>
             <Text size='30px' fw={600}>
               ATHENS
             </Text>
@@ -90,10 +103,21 @@ export function HeaderSearch() {
             </Text>
           </Link>
         </Group>
-        {!(signIn) && (
+        {!signIn && (
           <>
             {items}
-            <TextInput
+            <Autocomplete
+              placeholder='Search courses'
+              limit={5}
+              onChange={handleSearchChange}
+              data={courses.map((course) => {
+                return course.name;
+              })}
+              onOptionSubmit={(option) => {
+                handleCourseClick(option);
+              }}
+            />
+            {/* <TextInput
               value={searchValue}
               onChange={handleSearchChange}
               radius={'lg'}
@@ -105,20 +129,31 @@ export function HeaderSearch() {
                   stroke={1.5}
                 />
               }
-            />
-            {showDropdown && (
-            <div style={{ position: 'absolute', backgroundColor: 'white', width: '30%' }}>
-            {filteredCourses.map((course) => (
+              style={{ position: 'relative' }}
+            /> */}
+            {/* {showDropdown && (
               <div
-                key={course.name}
-                onClick={() => handleCourseClick(course.name)}
-                style={{ padding: '10px', cursor: 'pointer' }}
+                style={{
+                  position: 'absolute',
+                  backgroundColor: 'white',
+                  width: '30%',
+                  top: '0px',
+                  left: '0px',
+                  zIndex: '100',
+                }}
               >
-                {course.name}
-                </div>
-              ))}
-            </div>
-          )}
+                {filteredCourses.map((course) => (
+                  <div
+                    key={course.name}
+                    onClick={() => handleCourseClick(course.name)}
+                    style={{ padding: '10px', cursor: 'pointer' }}
+                  >
+                    {course.name}
+                  </div>
+                ))}
+              </div>
+            )} */}
+
             <DarkMode />
 
             <Button
