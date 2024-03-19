@@ -3,8 +3,28 @@ import { Title, Text, Container, Button, Overlay, rem } from '@mantine/core';
 import classes from './Hero.module.css';
 import { IconSchool, IconUser } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { AuthContext } from '../../auth/AuthContext.js';
+import { logout } from '../../auth/auth.js';
+import { useNavigate } from 'react-router-dom';
 
 export default function Hero() {
+    const { user, setUser } = useContext(AuthContext);
+    const navigate = useNavigate();
+    
+    const handleLogout = () => {
+        logout()
+            .then(() => {
+                setUser(null);
+                localStorage.removeItem('athensHubUser');
+                window.alert("You have successfully logged out!");
+                navigate('/');
+            })
+            .catch((error) => {
+                console.error("Error logging out:", error);
+            });
+    };
+    
     return (
         <div className={classes.wrapper}>
             <Overlay color="#000" opacity={0.65} zIndex={1} />
@@ -36,11 +56,12 @@ export default function Hero() {
                         className={cx(classes.control, classes.secondaryControl)}
                         size="lg"
                         component={Link}
-                        to="/login"
+                        to={user ? '/' : '/login'}
+                        onClick={user ? handleLogout : null}
                         leftSection={<IconUser style={{ width: rem(16), height: rem(16) }} stroke={1.5} />}
                         color={'#086a7e'}
                     >
-                        Login
+                        {user ? 'Logout' : 'Login'}
                     </Button>
                 </div>
             </div>

@@ -3,18 +3,36 @@ import { IconSearch, IconHome, IconBook, IconLogin } from '@tabler/icons-react';
 import classes from './Header.module.css';
 import DarkMode from '../DarkModeToggle/DarkMode.jsx';
 import { Link, useLocation } from 'react-router-dom';
+import { AuthContext } from '../../auth/AuthContext.js';
+import { useContext } from 'react';
+import { logout, login } from '../../auth/auth.js';
+import { useNavigate } from 'react-router-dom';
 
-const links = [
-  { link: '/', label: 'Home' },
-  { link: '/subjects', label: 'Subjects' },
-    { link: '/about', label: 'About'},
-  { link: '/login', label: 'Login' },
-];
 
 export function HeaderSearch() {
-  const location = useLocation();
+  const { user, setUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const links = [
+    { link: '/', label: 'Home' },
+    { link: '/subjects', label: 'Subjects' },
+    { link: '/about', label: 'About'},
+    {link: `${ user ? '/' : '/login'}`, label: `${user ? 'Logout' : 'Login'}`}
+  ];
   const signIn = location.pathname === '/login' || location.pathname === '/register';
   console.log(location);
+  const handleLogout = () => {
+    logout()
+      .then(() => {
+        setUser(null);
+        localStorage.removeItem('athensHubUser');
+        window.alert("You have successfully logged out!");
+        navigate('/');
+      })
+      .catch((error) => {
+        console.error("Error logging out:", error);
+      });
+  };
+
   const items = links.slice(0, links.length - 1).map((link) => (
     <Button
       key={link.label}
@@ -77,10 +95,10 @@ export function HeaderSearch() {
               component={Link}
               to={links[links.length - 1].link}
               className={classes.link}
-              // onClick={(event) => event.preventDefault()}
               variant={'filled'}
               color={'#ffffff'}
               radius='lg'
+              onClick={user ? handleLogout : login}
               leftSection={
                 <IconLogin
                   style={{ width: rem(16), height: rem(16) }}
