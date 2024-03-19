@@ -28,12 +28,12 @@ export function HeaderSearch() {
     { link: '/about', label: 'About' },
     { link: `${user ? '/' : '/login'}`, label: `${user ? 'Logout' : 'Login'}` }
   ];
-  const signIn = location.pathname === '/login' || location.pathname === '/register';
 
   const computedColorScheme = useComputedColorScheme('light', {
     getInitialValueInEffect: true,
   });
   const location = useLocation();
+  const signIn = location.pathname === '/login' || location.pathname === '/register';
   const [searchValue, setSearchValue] = useState(''); // For search input
   const [filteredCourses, setFilteredCourses] = useState([]); // For filtered dropdown results
   const [showDropdown, setShowDropdown] = useState(false); // To show/hide dropdown
