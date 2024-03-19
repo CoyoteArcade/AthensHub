@@ -1,8 +1,16 @@
 import { useForm } from '@mantine/form';
 import { TextInput, PasswordInput, Box, Paper, Group, Button, Divider, Stack } from '@mantine/core';
 import classes from './LoginForum.module.css';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../auth/AuthContext';
+import { login } from '../../auth/auth';
+import { useContext, useEffect } from 'react';
 
 function LoginForum(props) {
+  const navigate = useNavigate();
+  const { user, setUser } = useContext(AuthContext);
+
+
   const form = useForm({
     initialValues: {
       username: '',
@@ -15,10 +23,25 @@ function LoginForum(props) {
     },
   });
 
+  const handleLogin = (values) => {
+    login(values.username, values.password)
+      .then((user) => {
+        setUser({
+          username: values.username,
+          // Include any other fields from the form that you want to store in the user object
+        });
+        console.log("User logged in:", user);
+        localStorage.setItem('athensHubUser', JSON.stringify(user));
+        window.alert("You have successfully logged in!");
+        navigate('/')
+      })
+      .catch((error) => {
+        console.error("Error logging in:", error);
+    });
+  }
+
   return (
     <div className={classes.wrapper}>
-      
-
     <Paper radius="md" p="xl" withBorder {...props}>
       <div style={{ display: 'flex', flexDirection: 'row' }}> {/* Parent flex container */}
         <div className={classes.labels}> {/* Flex container for the text */}
@@ -36,12 +59,12 @@ function LoginForum(props) {
         <Divider mt="sm" mb="md" />
 
         <div className={classes.form}> {/* Flex container for the form */}
-          <form className={classes.fullWidth} onSubmit={form.onSubmit(() => {})}>
+          <form className={classes.fullWidth} onSubmit={form.onSubmit(() => {handleLogin(form.values)})}>
             <Stack align='stretch'>
               <TextInput
                 required
-                label="Username"
-                placeholder="Username"
+                label="Email Address"
+                placeholder="Email Address"
                 value={form.values.username}
                 onChange={(event) => form.setFieldValue('username', event.currentTarget.value)}
                 error={form.errors.username && 'Username is required'}

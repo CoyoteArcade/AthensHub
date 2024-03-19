@@ -1,8 +1,15 @@
 import { useForm } from '@mantine/form';
-import { TextInput, PasswordInput, Box, Paper, Group, Button, Divider, Checkbox, Stack } from '@mantine/core';
+import { TextInput, PasswordInput, Box, Paper, Group, Button, Divider, Stack } from '@mantine/core';
 import classes from './RegisterForum.module.css';
+import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { AuthContext } from '../../auth/AuthContext';
+import { register } from '../../auth/auth';
 
 function RegisterForum(props) {
+  const navigate = useNavigate();
+  const { user, setUser } = useContext(AuthContext);
+  
   const form = useForm({
     initialValues: {
       email: '',
@@ -10,7 +17,6 @@ function RegisterForum(props) {
       username:'',
       password: '',
       confirmPassword: '',
-      terms: false,
     },
 
     validate: {
@@ -31,6 +37,29 @@ function RegisterForum(props) {
       confirmPassword: (val, values) => (val !== values.password ? 'Passwords do not match' : null), // Changed the error message
     },
   });
+
+  const handleFormSubmit = (values) => {
+  // Here, you can call any function that registers the user and returns a promise
+  // For example, if you're using Firebase Authentication, you can call firebase.auth().createUserWithEmailAndPassword(values.email, values.password)
+    register(values.email, values.password, values.username)
+      .then((user) => {
+        // The user has been registered and is signed in!
+        // userCredential.user will contain information about the newly registered user
+        setUser({
+          email: values.email,
+          name: values.name,
+          username: values.username,
+          // Include any other fields from the form that you want to store in the user object
+        });
+        console.log("User registered:", user);
+        window.alert("You have successfully registered!");
+        navigate('/login')
+      })
+      .catch((error) => {
+        // An error occurred while trying to register the user
+        console.error("Error registering new user:", error);
+    });
+  }
 
   return (
     <div className={classes.wrapper}>
@@ -58,7 +87,7 @@ function RegisterForum(props) {
         <Divider mt="sm" mb="md" />
 
         <div className={classes.form}> {/* Flex container for the form */}
-          <form className={classes.fullWidth} onSubmit={form.onSubmit(() => {})}>
+          <form className={classes.fullWidth} onSubmit={form.onSubmit(() => {handleFormSubmit(form.values)})}>
             <Stack align='stretch'>
               <TextInput
                 required
@@ -113,12 +142,6 @@ function RegisterForum(props) {
                 radius="md"
               />
 
-              <Checkbox
-                required
-                label="I accept terms and conditions"
-                checked={form.values.terms}
-                onChange={(event) => form.setFieldValue('terms', event.currentTarget.checked)}
-              />
             </Stack>
 
             <Group justify="space-between" mt="xl">
