@@ -8,7 +8,7 @@ dotenv.config();
 // const openai = new OpenAI({
 //   apiKey: process.env.OPEN_AI_KEY
 // });
-
+const PORT = process.env.PORT || 3001;
 const app = express();
 
 app.use(express.json());
@@ -69,9 +69,9 @@ app.get('/api/courses/:name', async (req, res) => {
 // connect to mongodb
 mongoose.connect(process.env.MONGO_URI)
 .then(() => {
-  app.listen(3001, () => {
+  app.listen(PORT, () => {
     console.log('Server started');
-    console.log("Connected on port 3001");
+    console.log(`Listening on port ${PORT}`);
     // axios.get('http://localhost:3001/api/courses')
     // .then((response) => {
     //   console.log(response);
