@@ -160,7 +160,25 @@ function MaterialTab({ data }) {
             <Title order={2}>Table&nbsp;of&nbsp;Contents</Title>
             <Divider my='md' />
             <TypographyStylesProvider>
-              <div
+              <List listStyleType='ordered'>
+                {data.tableOfContents.map((chapter, idx) => {
+                  return (
+                    <List.Item key={chapter.chapter}>
+                      {chapter.chapter}
+                      <List listStyleType='ordered'>
+                        {chapter.sections.map((section, idx) => {
+                          return (
+                            <List.Item key={section}>
+                              {section}
+                            </List.Item>
+                          );
+                        })}
+                      </List>
+                    </List.Item>
+                  );
+                })}
+              </List>
+              {/* <div
                 dangerouslySetInnerHTML={{
                   __html: `<!DOCTYPE html>
                         <html>
@@ -217,7 +235,7 @@ function MaterialTab({ data }) {
                         </body>
                         </html>`,
                 }}
-              />
+              /> */}
             </TypographyStylesProvider>
           </Box>
         </Grid.Col>
