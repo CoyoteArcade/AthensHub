@@ -10,27 +10,30 @@ import {
 import { IconSearch, IconHome, IconBook, IconLogin } from '@tabler/icons-react';
 import classes from './Header.module.css';
 import DarkMode from '../DarkModeToggle/DarkMode.jsx';
+import { AuthContext } from '../../auth/AuthContext.js';
+import { useContext } from 'react';
+import { logout, login } from '../../auth/auth.js';
 import { useColorScheme } from '@mantine/hooks';
-import { Link, useLoaderData, useLocation } from 'react-router-dom';
+import { Link, useLoaderData, useLocation, useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-
-const links = [
-  { link: '/', label: 'Home' },
-  { link: '/about', label: 'About' },
-  { link: '/subjects', label: 'Courses' },
-  { link: '/login', label: 'Login' },
-];
 
 export function HeaderSearch() {
+  const { user, setUser } = useContext(AuthContext);
+  const navigate = useNavigate();
   const courses = useLoaderData();
   console.log('courses', courses);
+  const links = [
+    { link: '/', label: 'Home' },
+    { link: '/subjects', label: 'Subjects' },
+    { link: '/about', label: 'About' },
+    { link: `${user ? '/' : '/login'}`, label: `${user ? 'Logout' : 'Login'}` }
+  ];
 
   const computedColorScheme = useComputedColorScheme('light', {
     getInitialValueInEffect: true,
   });
   const location = useLocation();
-  const navigate = useNavigate();
+  const signIn = location.pathname === '/login' || location.pathname === '/register';
   const [searchValue, setSearchValue] = useState(''); // For search input
   const [filteredCourses, setFilteredCourses] = useState([]); // For filtered dropdown results
   const [showDropdown, setShowDropdown] = useState(false); // To show/hide dropdown
@@ -61,10 +64,20 @@ export function HeaderSearch() {
     setShowDropdown(false);
     navigate(`/courses/${encodeURI(courseName)}`); // Assuming your course URLs are like '/courses/course-name'
   };
-
-  const signIn =
-    location.pathname === '/login' || location.pathname === '/register';
   console.log(location);
+  const handleLogout = () => {
+    logout()
+      .then(() => {
+        setUser(null);
+        localStorage.removeItem('athensHubUser');
+        window.alert("You have successfully logged out!");
+        navigate('/');
+      })
+      .catch((error) => {
+        console.error("Error logging out:", error);
+      });
+  };
+
   const items = links.slice(0, links.length - 1).map((link) => (
     <Button
       key={link.label}
@@ -147,9 +160,9 @@ export function HeaderSearch() {
               component={Link}
               to={links[links.length - 1].link}
               className={classes.link}
-              // onClick={(event) => event.preventDefault()}
               variant={'filled'}
               radius='lg'
+              onClick={user ? handleLogout : login}
               leftSection={
                 <IconLogin
                   style={{ width: rem(16), height: rem(16) }}
