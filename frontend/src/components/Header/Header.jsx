@@ -93,6 +93,7 @@ export function HeaderSearch() {
         justify={signIn ? 'center' : 'space-between'}
         className={classes.inner}
       >
+        {/* Logo */}
         <Group gap={0}>
           <Link
             to='/'
@@ -117,12 +118,17 @@ export function HeaderSearch() {
             </Text>
           </Link>
         </Group>
+
         {!signIn && (
           <>
+            {/* Nav Buttons */}
             {items}
+
+            {/* Searchbar */}
             <Autocomplete
               placeholder='Search courses'
               limit={5}
+              radius='20px'
               onChange={handleSearchChange}
               data={courses.map((course) => {
                 return course.name;
@@ -131,21 +137,10 @@ export function HeaderSearch() {
                 handleCourseClick(option);
               }}
             />
-            {/* <TextInput
-              value={searchValue}
-              onChange={handleSearchChange}
-              radius={'lg'}
-              className={classes.search}
-              placeholder='Search courses'
-              leftSection={
-                <IconSearch
-                  style={{ width: rem(16), height: rem(16) }}
-                  stroke={1.5}
-                />
-              }
-            />
+
             <DarkMode />
 
+            {/* Login Button */}
             <Button
               key={links[links.length - 1].label}
               // href={links[links.length - 1].link}
@@ -154,7 +149,6 @@ export function HeaderSearch() {
               className={classes.link}
               // onClick={(event) => event.preventDefault()}
               variant={'filled'}
-              color={'#ffffff'}
               radius='lg'
               leftSection={
                 <IconLogin
