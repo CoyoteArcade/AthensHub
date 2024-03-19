@@ -124,7 +124,7 @@ export function HeaderSearch() {
             {/* Nav Buttons */}
             <Group gap='lg'>{items}</Group>
 
-            {/* Searchbar */}
+            {/* Searchbar with Results */}
             <Autocomplete
               placeholder='Search courses'
               limit={5}
