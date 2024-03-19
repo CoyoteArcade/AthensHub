@@ -18,9 +18,10 @@ export default function DarkMode() {
       onClick={() =>
         setColorScheme(computedColorScheme === 'light' ? 'dark' : 'light')
       }
-      variant='default'
-      size='xl'
+      variant='light'
+      size='lg'
       aria-label='Toggle color scheme'
+      radius='20px'
     >
       <IconSun className={cx(classes.icon, classes.light)} stroke={1.5} />
       <IconMoon className={cx(classes.icon, classes.dark)} stroke={1.5} />
