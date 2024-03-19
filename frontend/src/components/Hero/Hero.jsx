@@ -1,7 +1,7 @@
 import cx from 'clsx';
 import { Title, Text, Container, Button, Overlay, rem } from '@mantine/core';
 import classes from './Hero.module.css';
-import { IconSchool, IconUser } from '@tabler/icons-react';
+import { IconBook, IconLogin } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from '../../auth/AuthContext.js';
@@ -17,11 +17,11 @@ export default function Hero() {
       .then(() => {
         setUser(null);
         localStorage.removeItem('athensHubUser');
-        window.alert("You have successfully logged out!");
+        window.alert('You have successfully logged out!');
         navigate('/');
       })
       .catch((error) => {
-        console.error("Error logging out:", error);
+        console.error('Error logging out:', error);
       });
   };
 
@@ -45,23 +45,33 @@ export default function Hero() {
           <Button
             className={classes.control}
             component={Link}
-            to="/subjects"
+            to='/subjects'
             radius='20px'
-            variant="white"
-            size="lg"
-            leftSection={<IconSchool style={{ width: rem(16), height: rem(16) }} stroke={1.5} />}
+            variant='white'
+            size='lg'
+            leftSection={
+              <IconBook
+                style={{ width: rem(16), height: rem(16) }}
+                stroke={1.5}
+              />
+            }
           >
             Courses
           </Button>
           <Button
             className={cx(classes.control, classes.secondaryControl)}
-            size="lg"
+            size='lg'
             variant='filled'
             radius='20px'
             component={Link}
             to={user ? '/' : '/login'}
             onClick={user ? handleLogout : null}
-            leftSection={<IconUser style={{ width: rem(16), height: rem(16) }} stroke={1.5} />}
+            leftSection={
+              <IconLogin
+                style={{ width: rem(16), height: rem(16) }}
+                stroke={1.5}
+              />
+            }
           >
             {user ? 'Logout' : 'Login'}
           </Button>

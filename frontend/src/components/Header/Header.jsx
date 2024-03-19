@@ -14,7 +14,12 @@ import { AuthContext } from '../../auth/AuthContext.js';
 import { useContext } from 'react';
 import { logout, login } from '../../auth/auth.js';
 import { useColorScheme } from '@mantine/hooks';
-import { Link, useLoaderData, useLocation, useNavigate } from 'react-router-dom';
+import {
+  Link,
+  useLoaderData,
+  useLocation,
+  useNavigate,
+} from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 
 export function HeaderSearch() {
@@ -24,16 +29,17 @@ export function HeaderSearch() {
   console.log('courses', courses);
   const links = [
     { link: '/', label: 'Home' },
-    { link: '/subjects', label: 'Subjects' },
     { link: '/about', label: 'About' },
-    { link: `${user ? '/' : '/login'}`, label: `${user ? 'Logout' : 'Login'}` }
+    { link: '/subjects', label: 'Courses' },
+    { link: `${user ? '/' : '/login'}`, label: `${user ? 'Logout' : 'Login'}` },
   ];
 
   const computedColorScheme = useComputedColorScheme('light', {
     getInitialValueInEffect: true,
   });
   const location = useLocation();
-  const signIn = location.pathname === '/login' || location.pathname === '/register';
+  const signIn =
+    location.pathname === '/login' || location.pathname === '/register';
   const [searchValue, setSearchValue] = useState(''); // For search input
   const [filteredCourses, setFilteredCourses] = useState([]); // For filtered dropdown results
   const [showDropdown, setShowDropdown] = useState(false); // To show/hide dropdown
@@ -70,11 +76,11 @@ export function HeaderSearch() {
       .then(() => {
         setUser(null);
         localStorage.removeItem('athensHubUser');
-        window.alert("You have successfully logged out!");
+        window.alert('You have successfully logged out!');
         navigate('/');
       })
       .catch((error) => {
-        console.error("Error logging out:", error);
+        console.error('Error logging out:', error);
       });
   };
 
@@ -135,9 +141,9 @@ export function HeaderSearch() {
         {!signIn && (
           <>
             {/* Nav Buttons */}
-            {items}
+            <Group gap='30px'>{items}</Group>
 
-            {/* Searchbar */}
+            {/* Searchbar with Results */}
             <Autocomplete
               placeholder='Search courses'
               limit={5}
@@ -151,28 +157,29 @@ export function HeaderSearch() {
               }}
             />
 
-            <DarkMode />
-
-            {/* Login Button */}
-            <Button
-              key={links[links.length - 1].label}
-              // href={links[links.length - 1].link}
-              component={Link}
-              to={links[links.length - 1].link}
-              className={classes.link}
-              variant={'filled'}
-              radius='lg'
-              onClick={user ? handleLogout : login}
-              leftSection={
-                <IconLogin
-                  style={{ width: rem(16), height: rem(16) }}
-                  stroke={1.5}
-                />
-              }
-              label={links[links.length - 1].label}
-            >
-              {links[links.length - 1].label}
-            </Button>
+            <Group>
+              <DarkMode />
+              {/* Login Button */}
+              <Button
+                key={links[links.length - 1].label}
+                // href={links[links.length - 1].link}
+                component={Link}
+                to={links[links.length - 1].link}
+                className={classes.link}
+                variant={'filled'}
+                radius='lg'
+                onClick={user ? handleLogout : login}
+                leftSection={
+                  <IconLogin
+                    style={{ width: rem(16), height: rem(16) }}
+                    stroke={1.5}
+                  />
+                }
+                label={links[links.length - 1].label}
+              >
+                {links[links.length - 1].label}
+              </Button>
+            </Group>
           </>
         )}
       </Group>
