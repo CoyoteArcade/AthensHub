@@ -1,7 +1,7 @@
 import cx from 'clsx';
 import { Title, Text, Container, Button, Overlay, rem } from '@mantine/core';
 import classes from './Hero.module.css';
-import { IconSchool, IconUser } from '@tabler/icons-react';
+import { IconBook, IconLogin } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
 
 export default function Hero() {
@@ -33,7 +33,7 @@ export default function Hero() {
             variant='white'
             size='lg'
             leftSection={
-              <IconSchool
+              <IconBook
                 style={{ width: rem(16), height: rem(16) }}
                 stroke={1.5}
               />
@@ -49,7 +49,7 @@ export default function Hero() {
             component={Link}
             to='/login'
             leftSection={
-              <IconUser
+              <IconLogin
                 style={{ width: rem(16), height: rem(16) }}
                 stroke={1.5}
               />
