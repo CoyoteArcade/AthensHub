@@ -18,6 +18,7 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <Root />,
+    loader: courseLoader, 
     errorElement: <h1>404 not found</h1>,
     children: [
       {
